@@ -31,3 +31,15 @@ def database_missed(e):
     message = "Бд отсутствует"
     logger.error(f"{message} - {e}")
     return render_template("index_errorpage.html", message=message)
+
+
+@error_blueprint.app_errorhandler(500)
+def page_error_500(e):
+    message = f"На сервере произошла ошибка - {e}"
+    logger.error(f"{message} - {e}")
+    return render_template("index_errorpage.html", message=message)
+
+
+@error_blueprint.app_errorhandler(ValueError)
+def page_error_value(e):
+    return f'{e}', 500
