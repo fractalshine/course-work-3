@@ -23,21 +23,21 @@ def page_not_found(e):
 def database_corrupted(e):
     message = "Бд повреждена"
     logger.error(f"{message} - {e}")
-    return render_template("index_errorpage.html", message=message)
+    return render_template("index_errorpage.html", message=message), 500
 
 
 @error_blueprint.app_errorhandler(FileNotFoundError)
 def database_missed(e):
     message = "Бд отсутствует"
     logger.error(f"{message} - {e}")
-    return render_template("index_errorpage.html", message=message)
+    return render_template("index_errorpage.html", message=message), 500
 
 
 @error_blueprint.app_errorhandler(500)
 def page_error_500(e):
     message = f"На сервере произошла ошибка - {e}"
     logger.error(f"{message} - {e}")
-    return render_template("index_errorpage.html", message=message)
+    return render_template("index_errorpage.html", message=message), 500
 
 
 @error_blueprint.app_errorhandler(ValueError)
