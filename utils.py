@@ -1,5 +1,6 @@
 import json
-from config import ALLOWED_EXTENSIONS, POST_PATH, COMMENTS_PATH
+from config import ALLOWED_EXTENSIONS
+from flask import current_app
 
 
 def load_json(filepath):
@@ -16,15 +17,17 @@ def load_json(filepath):
 def load_posts() -> list:
     """Выгружаем посты в список из файла"""
 
-    post_list = load_json(POST_PATH)
+    post_path = current_app.config.get("POST_PATH")
+    post_list = load_json(post_path)
 
     return post_list
 
 
 def load_comments() -> list:
-    """Выгружаем посты в список из файла"""
+    """Выгружаем каменты в список из файла"""
 
-    post_list = load_json(COMMENTS_PATH)
+    comment_path = current_app.config.get("COMMENTS_PATH")
+    post_list = load_json(comment_path)
 
     return post_list
 
@@ -45,7 +48,7 @@ def get_posts_by_word(user_input):
     search_list = []
 
     for dictionary in dict_list:
-        post = dictionary['content']    .lower()
+        post = dictionary['content'].lower()
         if user_input_lower in post:
             search_list.append(dictionary)
             continue
