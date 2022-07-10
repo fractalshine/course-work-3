@@ -8,14 +8,20 @@ from blueprints.errors.view import error_blueprint
 from blueprints.posts.posts import posts_blueprint
 
 
-app = Flask(__name__)
-app.config.from_object(Config)
+def create_app(config):
+    app = Flask(__name__)
+    app.config.from_object(config)
 
-# Регистрируем блюпринты
-app.register_blueprint(main_blueprint)
-app.register_blueprint(posts_blueprint)
-app.register_blueprint(api_blueprint)
-app.register_blueprint(error_blueprint)
+    # Регистрируем блюпринты
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(posts_blueprint)
+    app.register_blueprint(api_blueprint)
+    app.register_blueprint(error_blueprint)
+
+    return app
+
+
+app = create_app(Config)
 
 if __name__ == "__main__":
     app.run(debug=True)
